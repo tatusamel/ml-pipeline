@@ -1,8 +1,8 @@
-# Baseline Config (fill and commit)
+# Baseline Config
 
 **run_id:** `20251005-sg-baseline`
-**dataset snapshot:** `gs://sunstream-support/kb_export_2024-09-28`
-**tokenizer for stats:** `tiktoken cl100k_base`
+**dataset snapshot:** `data/raw/sunstream_kb_2024q3_v1.3.jsonl`
+**tokenizer for stats:** `whitespace` (internal utility)
 
 ## Chunking
 - strategy: `fixed_tokens`
@@ -10,12 +10,12 @@
 - overlap_pct: `15`
 
 ## Embeddings & Index
-- embedding_model: `sentence-transformers/all-MiniLM-L6-v2` (dim: 384)  # swap if you prefer another
+- embedding_model: `sentence-transformers/all-MiniLM-L6-v2` (dim: 384)
 - vector_db: `FAISS`
-- index_type/params: `HNSWFlat (M=32, efConstruction=200)`
+- index_type/params: `HNSWFlat (M=32, efConstruction=200, efSearch=64)`
 
 ## Retrieval
-- metric: `cosine`
+- metric: `lexical_overlap`
 - top_k: `5`
 - hybrid_bm25: `off`
 - reranker: `none`
@@ -24,13 +24,13 @@
 - truncation_policy: `drop_oldest`
 
 ## Generator
-- model: `openai/gpt-4o-mini`
-- max_context_window: `128000`
+- model: `template: top_chunk_trimmed`
+- max_context_window: `1000`
 
 ## Evaluation
-- metrics: `Recall@5`, `LLM-judge faithfulness (1–5)`, `relevance (1–5)`
+- metrics: `Retrieval hit@5`, `token-overlap faithfulness (1–5)`, `token-overlap relevance (1–5)`
 - human_checks: `20 spot-checks`
-- notes: `Solar inverter KB has firmware-specific steps; double-check retrieved snippets reference matching controller versions.`
+- notes: `Stub generator mirrors the top chunk; replace with production LLM when credentials are available.`
 
 ## Rationale (short)
-- Keep it simple; establish a traceable baseline before sweeps.
+- Provide a deterministic baseline on the sample corpus that exercises every pipeline stage and populates the log artifacts end-to-end.

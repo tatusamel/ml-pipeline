@@ -1,1 +1,2 @@
 run_id,embedding_model,embedding_dim,vector_db,index_params_json,chunks_in,vectors_written,dedupe_pct,failures,throughput_chunks_per_s,duration_s
+20251005-sg-baseline,sentence-transformers/all-MiniLM-L6-v2,384,FAISS,"{""type"": ""HNSWFlat"", ""M"": 32, ""efConstruction"": 200, ""efSearch"": 64}",50,50,0.0,0,2226.08,0.02

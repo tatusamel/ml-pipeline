@@ -1,0 +1,35 @@
+{
+  "run_id": "20251005-sg-baseline",
+  "dataset_path": "data/raw/sunstream_kb_2024q3_v1.3.jsonl",
+  "tokenizer": "whitespace",
+  "chunking": {
+    "strategy": "fixed_tokens",
+    "chunk_size_tokens": 1000,
+    "overlap_pct": 15
+  },
+  "embeddings": {
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "dim": 384,
+    "vector_db": "FAISS",
+    "index_params": {
+      "type": "HNSWFlat",
+      "M": 32,
+      "efConstruction": 200,
+      "efSearch": 64
+    }
+  },
+  "retrieval": {
+    "metric": "lexical_overlap",
+    "top_k": 5,
+    "filters": {}
+  },
+  "generator": {
+    "model": "top_chunk_template",
+    "max_context_window": 1000
+  },
+  "evaluation": {
+    "faithfulness_scale": [1, 5],
+    "relevance_scale": [1, 5],
+    "correctness_scale": [1, 5]
+  }
+}

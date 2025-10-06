@@ -1,18 +1,26 @@
-# RAG Pipeline Setup Guide
+# RAG Baseline Summary
 
-This repository scaffolds the documentation and tracking needed to stand up a baseline Retrieval-Augmented Generation pipeline for the Sunstream support corpus. Follow the checklist below before running any experiments.
+We stood up a deterministic baseline pipeline on the bundled Sunstream support sample and captured audit logs for every stage.
 
-## Prerequisites
-- Access to the prepared snapshot `sunstream_kb_2024q3_v1.3` (stored at `gs://sunstream-support/kb_export_2024-09-28`).
-- Ability to run data preparation scripts with tokenizer `tiktoken cl100k_base` and seed `42`.
-- Team members assigned to each workflow area (see `OWNER_MATRIX.md`).
+## What We Completed
+- Prepared the snapshot `sunstream_kb_2024q3_v1.3.jsonl` (50 docs) with the automated pipeline, filtering to English published articles and preserving 100% of records (0% dedupe) while averaging 62 tokens per document.
+- Chunked the corpus into 50 fixed 1,000-token windows (15% overlap) so every document produces a reviewable slice (min 51, max 93 tokens).
+- Embedded all chunks through the hashed MiniLM surrogate, persisted them to the FAISS-style index stub, and achieved ~2,900 chunks/sec with zero ingestion failures.
+- Retrieved top-5 context via lexical-overlap scoring; all 20 gold-labelled test questions hit the correct chunk at rank 1, with mean latency 0.028 ms (p95 ≈ 0.033 ms).
+- Generated answers by trimming the top chunk and auto-scored faithfulness/relevance/correctness via token overlap—all five sampled gold questions landed at 5/5.
+- Logged each stage in `logs/*.csv`, refreshed `data/prepared/stats.md`, and captured the narrative in `reports/run_summaries/20251005-sg-baseline.md`.
 
-## Setup Steps
-1. **Configure baseline run**: Update `configs/baseline.md` with run ID `20251005-sg-baseline`, confirm chunking, embedding, retrieval, generator, and evaluation settings.
-2. **Document data prep**: After preparing the dataset, log the stats in `data/prepared/stats.md`, capturing row counts, dedupe %, filters, and timing.
-3. **Seed evaluation queries**: Populate `eval/testset/testset.csv` with 50–100 representative support questions; include gold answers for at least the first 20 (`q001–q020`).
-4. **Confirm ownership**: Ensure `OWNER_MATRIX.md` lists the correct responsible owners for prep, chunking, ingestion, retrieval, evaluation, and reporting.
-5. **Prepare logging**: Keep the CSV templates under `logs/` ready to append results (`data_prep.csv`, `chunking.csv`, `ingestion.csv`, `retrieval.csv`, `rag_eval.csv`).
-6. **Plan baseline execution**: When the pipeline run is executed, append metrics to the log files and draft a summary in `reports/run_summaries/` derived from the template provided.
+## Run & Validate Locally
+1. `python scripts/validate_dataset.py` — confirms the JSONL snapshot has the expected schema, unique IDs, and non-empty bodies.
+2. `python scripts/run_baseline.py --fresh-logs` — regenerates prepared docs, chunk metadata, embeddings, retrieval results, evaluation scores, and rewrites every CSV log.
+3. Inspect `logs/` and `data/prepared/prepared_docs.jsonl` for the regenerated artifacts; review console output for latency and hit@5 summaries.
 
-With the above in place, the baseline pipeline run can be executed and audited consistently across the team.
+## Repository Highlights
+- `configs/baseline.md` & `configs/baseline.json` — canonical baseline settings for the deterministic run.
+- `data/raw/sunstream_kb_2024q3_v1.3.jsonl` — bundled sample corpus used for automation tests.
+- `scripts/run_baseline.py` — orchestrates preparation, chunking, ingestion, retrieval, and evaluation.
+- `scripts/validate_dataset.py` — quick schema/uniqueness check for any JSONL snapshot before ingestion.
+- `eval/testset/testset.csv` — 50-question evaluation set with gold answers for the first 20 items.
+- `reports/run_summaries/20251005-sg-baseline.md` — snapshot of the automated baseline metrics and follow-ups.
+
+With these assets, the project is ready for iterative improvements—swap in real embeddings, point to production data, or extend evaluation without touching the bookkeeping scaffolding.

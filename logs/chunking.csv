@@ -1,1 +1,2 @@
 run_id,strategy,chunk_size_tokens,overlap_pct,docs_in,chunks_out,avg_tokens_per_chunk,min_tokens,max_tokens,short_chunk_count,duration_s
+20251005-sg-baseline,fixed_tokens,1000,15,50,50,62.24,51,93,50,0.0
