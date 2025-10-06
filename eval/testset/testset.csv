@@ -1,0 +1,51 @@
+query_id,query,topic,difficulty,answer_type,gold_answer
+q001,"How do I reset a Sunstream X400 controller after a firmware update fails with code F19?",firmware,3,troubleshooting,"Hold the recessed reset button on the X400 for 12 seconds, wait for the status LED to blink green twice, then reapply the firmware via the Maintenance > Updates panel using package 4.2.6 while keeping the array breaker open."
+q002,"What is the supported string voltage range for the Sunstream X400 under cold weather conditions?",specs,2,factoid,"The X400 string input stays within spec between 350 VDC and 980 VDC in cold weather; derate alarms trigger outside that span."
+q003,"List the prerequisites for enabling grid-forming mode on Sunstream hybrid inverters.",grid,4,multi-fact,"Grid-forming mode requires firmware 4.2.0 or higher, battery SOC above 35%, breaker S3 closed, and the microgrid profile 'Island-120' loaded."
+q004,"Which log files should I collect to diagnose repeated GFCI trips on the S120 optimizer?",diagnostics,3,multi-fact,"Gather inverter_event.log, optimizer_diag.csv for the affected string, and env_snapshot.json covering the last 48 hours."
+q005,"How can I silence the buzzer alarm on an X400 without disrupting power production?",operations,2,procedure,"Open the HMI > Alarms menu, select the active event, press 'Acknowledge', then toggle 'Audible Alert' to Off; production is unaffected."
+q006,"What torque spec should be used for the DC busbar connections on the X400 cabinet?",installation,1,factoid,"Torque the DC busbar lugs to 45 N·m using a calibrated torque wrench as listed in the install guide table 3-2."
+q007,"How do I export a 30-day performance report from Sunstream Fleet Monitor?",monitoring,2,procedure,"Go to Fleet Monitor > Reports, choose Performance Summary, set interval to Last 30 Days, select the site, and click Export CSV."
+q008,"What causes alert A27 'String Imbalance Detected' and how do I clear it?",alerts,3,troubleshooting,"Alert A27 fires when adjacent strings differ by >15% current; inspect for shading or blown fuses, replace any failed optimizer, then run the Auto-Balance command."
+q009,"Which API endpoint returns live active power for a given inverter?",api,2,factoid,"Use GET /v2/sites/{site_id}/inverters/{inverter_id}/metrics?fields=active_power over HTTPS with a PAT."
+q010,"Summarize the maintenance checklist required every 6 months for Sunstream rooftop arrays.",maintenance,3,multi-fact,"The 6-month checklist covers visual inspection of cabling, cleaning intake filters, verifying torque on AC terminals, confirming firmware currency, and updating the maintenance log."
+q011,"How do I adjust the battery charge rate limit on hybrid controllers?",battery,3,procedure,"Navigate to Settings > Storage > Charge Control, switch to Manual, set the kW limit slider, and save; a reboot is not required."
+q012,"What warranty applies to optimizer model S120 in the EU region?",policy,2,factoid,"The S120 optimizer carries a 12-year standard warranty in the EU, extendable to 20 years with the Premium Protection plan."
+q013,"Give the steps to pair a replacement gateway with the customer mobile app.",onboarding,2,procedure,"Open the app, tap Add Device, scan the gateway QR label, connect to the setup Wi-Fi, enter the site token, and wait for the heartbeat indicator to show solid blue."
+q014,"What is the recommended clearance around an X400 cabinet for adequate ventilation?",installation,1,factoid,"Maintain 300 mm side clearance and 600 mm front clearance for ventilation per install manual section 2.1."
+q015,"How do I roll back to firmware 4.1.3 if 4.2.0 introduces reactive power instability?",firmware,4,procedure,"Download image 4.1.3 from Support, upload via Maintenance > Firmware > Manual Upload, select 'Allow rollback', confirm, and monitor for the green heartbeat before re-enabling grid sync."
+q016,"Which data points does the anomaly detector use when scoring inverter health?",analytics,3,multi-fact,"Health scoring ingests 15-minute averages of DC voltage, DC current, AC frequency, heat-sink temp, and error counter deltas."
+q017,"What steps verify successful integration with the utility SCADA system?",integration,4,procedure,"Confirm Modbus TCP handshake, validate points list 47A matches SCADA tags, run the telemetry test script, and capture logs showing ACK on control commands."
+q018,"Explain the conditions that trigger battery reserve mode on hybrid sites.",battery,3,definition,"Reserve mode starts when forecasted load exceeds generation, SOC drops under the reserve threshold, or a grid outage notice arrives via Flex API."
+q019,"How can I check if a site uses the new string-level IV curve scanning feature?",features,2,factoid,"Look under Diagnostics > IV Scans; if 'String-level IV (beta)' toggle is enabled and scan history shows dataset version 2024.7, the feature is active."
+q020,"Provide the escalation path when repeated arc-fault alarms persist after hardware replacement.",safety,4,multi-fact,"Escalate to Tier-2 Power Electronics, attach thermal images and arc sensor logs, open a Jira ticket under component SAF-ARC, and notify the regional safety lead within 4 hours."
+q021,"What factors should I review before upsizing the AC breaker on a Sunstream X400 array?",design,3,multi-fact,
+q022,"How do I interpret the thermal trend chart in Fleet Monitor for early inverter derating?",monitoring,2,analysis,
+q023,"Which prerequisites must be met before requesting remote reactive power tuning from Sunstream support?",grid,3,multi-fact,
+q024,"What steps are involved in replacing a failed S120 optimizer on a steep roof installation?",maintenance,4,procedure,
+q025,"How can I bulk-upload asset metadata via the Fleet Monitor API?",api,3,procedure,
+q026,"What indicators suggest that the battery management system needs recalibration?",battery,3,diagnostic,
+q027,"How should I document site commissioning evidence for utility audits?",compliance,2,checklist,
+q028,"Explain how the new outage forecasting model uses weather data in the R21 release.",analytics,4,explanation,
+q029,"What is the recommended process for training new installers on the Sunstream hybrid platform?",training,2,procedure,
+q030,"How do I handle decommissioning steps for an X400 when the building lease ends?",operations,4,procedure,
+q031,"What KPIs should the NOC monitor daily for utility-scale Sunstream deployments?",monitoring,3,multi-fact,
+q032,"How can I estimate annual production losses from soiling on a 5 MW array?",performance,4,calculation,
+q033,"Which competencies must field technicians certify on before leading troubleshooting calls?",training,2,list,
+q034,"What checklist governs safe battery isolation before service?",safety,3,checklist,
+q035,"How do I update the customer notification templates for outage alerts?",communication,2,procedure,
+q036,"What is the lifecycle for managing spare inverters within the RMA portal?",logistics,3,process,
+q037,"Outline the decision tree for dispatching on-site support versus remote triage.",support,4,decision-tree,
+q038,"How do I configure VPN tunneling for SCADA packets over the secure gateway?",integration,5,procedure,
+q039,"What documentation is needed to approve a grid interconnection variance?",compliance,4,list,
+q040,"How is the incident severity score computed in the R24 update?",analytics,4,explanation,
+q041,"Describe steps to validate meter calibration after replacing CT sensors.",maintenance,3,procedure,
+q042,"What training resources cover the new battery firmware safeties introduced in 4.2?",training,1,reference,
+q043,"How do I schedule weekly health reports to email stakeholders automatically?",monitoring,2,procedure,
+q044,"Which data retention rules govern inverter telemetry stored in the EU region?",compliance,3,policy,
+q045,"What is the escalation process when grid frequency exceeds 62 Hz for more than 5 minutes?",grid,3,procedure,
+q046,"How can I cross-check IV curve anomalies against weather station data?",analytics,3,analysis,
+q047,"What steps prepare a site for phased battery expansion?",planning,4,checklist,
+q048,"How do I retrieve archived alarm history older than 90 days?",monitoring,2,procedure,
+q049,"What considerations govern placing hybrid cabinets in coastal environments?",installation,3,guidelines,
+q050,"How do I benchmark inverter uptime according to the 2024 SLA?",operations,2,calculation,

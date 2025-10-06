@@ -1,0 +1,1 @@
+run_id,query_id,generated_answer,gold_answer,retrieved_ids_json,retrieved_snippets_json,similarity,faithfulness_1to5,relevance_1to5,correctness_1to5,notes

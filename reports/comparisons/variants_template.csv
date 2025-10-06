@@ -1,0 +1,6 @@
+variant,chunk_size,overlap,k,hybrid,reranker,Recall@5,faithfulness_avg,relevance_avg,latency_p95_ms,cost_per_100q
+baseline,1000,15%,5,off,none,,,,,
+smaller-chunks,600,15%,5,off,none,,,,,
+larger-chunks,1500,15%,5,off,none,,,,,
+hybrid-on,1000,15%,5,on,none,,,,,
+rerank,1000,15%,5,off,cross-encoder-xyz,,,,,

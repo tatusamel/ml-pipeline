@@ -1,0 +1,1 @@
+run_id,embedding_model,embedding_dim,vector_db,index_params_json,chunks_in,vectors_written,dedupe_pct,failures,throughput_chunks_per_s,duration_s
